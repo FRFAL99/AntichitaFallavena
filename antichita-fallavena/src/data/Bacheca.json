@@ -1,0 +1,13 @@
+[
+    {
+      "nome": "Fancy Product",
+      "foto": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+      "descrizione": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam auctor nisi at orci porta, sit amet rhoncus ipsum posuere. Nunc cursus feugiat pharetra. Vestibulum hendrerit velit convallis velit feugiat, a vehicula nulla gravida. Praesent ac rutrum augue. Morbi sodales quis risus in tempus. Etiam aliquam risus nec nunc mattis, maximus commodo metus molestie. Etiam non urna nisl."
+    },
+    {
+      "nome": "Special Item",
+      "foto": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+      "descrizione": "Integer venenatis interdum tincidunt. Pellentesque dapibus tincidunt neque, non semper tortor fermentum vitae. Suspendisse potenti. Donec sit amet pellentesque nunc. Sed suscipit enim nec gravida faucibus. Cras eget cursus velit. Quisque porttitor tempor malesuada. Nullam et sodales eros, sed convallis augue. Fusce ullamcorper lacus metus, eu vestibulum enim auctor ac."
+    }
+  ]
+  
