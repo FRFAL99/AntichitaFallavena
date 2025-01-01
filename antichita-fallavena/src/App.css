@@ -101,3 +101,22 @@
 .bacheca-card .card-footer {
   text-align: center;
 }
+
+
+/* Aggiungi un padding-top solo per i contenuti delle pagine (non per la home) */
+.page-content {
+  padding-top: 70px; /* Questo padding è per schermi più grandi, adatta come necessario */
+}
+
+/* Aggiungi una media query per schermi più piccoli */
+@media (max-width: 768px) {
+  .page-content {
+    padding-top: 60px; /* Riduci il padding per dispositivi mobili */
+  }
+}
+
+@media (max-width: 576px) {
+  .page-content {
+    padding-top: 50px; /* Ancora più piccolo per schermi ultra-compatti */
+  }
+}
