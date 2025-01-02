@@ -1,0 +1,55 @@
+{
+  "Bacheca": {
+    "Articolo1": {
+      "Categoria": "casuale",
+      "descrizione": "Integer venenatis interdum tincidunt. Pellentesque dapibus tincidunt neque, non semper tortor fermentum vitae. Suspendisse potenti. Donec sit amet pellentesque nunc. Sed suscipit enim nec gravida faucibus. Cras eget cursus velit. Quisque porttitor tempor malesuada. Nullam et sodales eros, sed convallis augue. Fusce ullamcorper lacus metus, eu vestibulum enim auctor ac.",
+      "immagineUrl": "https://static.wikia.nocookie.net/yugiohenespanol/images/9/93/Foto_mementotl%C3%A1n_akihiron.jpg/revision/latest?cb=20240804041259&path-prefix=es",
+      "nome": "test Prodotto tino cane",
+      "prezzo": 20
+    },
+    "Articolo2": {
+      "Categoria": "casuale",
+      "descrizione": "Integer venenatis interdum tincidunt. Pellentesque dapibus tincidunt neque, non semper tortor fermentum vitae. Suspendisse potenti. Donec sit amet pellentesque nunc. Sed suscipit enim nec gravida faucibus. Cras eget cursus velit. Quisque porttitor tempor malesuada. Nullam et sodales eros, sed convallis augue. Fusce ullamcorper lacus metus, eu vestibulum enim auctor ac.",
+      "immagineUrl": "https://static.wikia.nocookie.net/yugiohenespanol/images/9/93/Foto_mementotl%C3%A1n_akihiron.jpg/revision/latest?cb=20240804041259&path-prefix=es",
+      "nome": "test Prodottos",
+      "prezzo": 45
+    }
+  },
+  "Catalogo": {
+    "Articolo1": {
+      "Categoria": "Mah",
+      "descrizione": "Integer venenatis interdum tincidunt. Pellentesque dapibus tincidunt neque, non semper tortor fermentum vitae. Suspendisse potenti. Donec sit amet pellentesque nunc. Sed suscipit enim nec gravida faucibus. Cras eget cursus velit. Quisque porttitor tempor malesuada. Nullam et sodales eros, sed convallis augue. Fusce ullamcorper lacus metus, eu vestibulum enim auctor ac.",
+      "immagineUrl": "vediamo",
+      "nome": "test",
+      "prezzo": 5000
+    },
+    "Articolo2": {
+      "Categoria": "Mah",
+      "descrizione": "Integer venenatis interdum tincidunt. Pellentesque dapibus tincidunt neque, non semper tortor fermentum vitae. Suspendisse potenti. Donec sit amet pellentesque nunc. Sed suscipit enim nec gravida faucibus. Cras eget cursus velit. Quisque porttitor tempor malesuada. Nullam et sodales eros, sed convallis augue. Fusce ullamcorper lacus metus, eu vestibulum enim auctor ac.",
+      "immagineUrl": "vediamo",
+      "nome": "test",
+      "prezzo": 5000
+    },
+    "Articolo3": {
+      "Categoria": "Mah",
+      "descrizione": "Integer venenatis interdum tincidunt. Pellentesque dapibus tincidunt neque, non semper tortor fermentum vitae. Suspendisse potenti. Donec sit amet pellentesque nunc. Sed suscipit enim nec gravida faucibus. Cras eget cursus velit. Quisque porttitor tempor malesuada. Nullam et sodales eros, sed convallis augue. Fusce ullamcorper lacus metus, eu vestibulum enim auctor ac.",
+      "immagineUrl": "vediamo",
+      "nome": "test",
+      "prezzo": 5000
+    },
+    "Articolo4": {
+      "Categoria": "Mah",
+      "descrizione": "Integer venenatis interdum tincidunt. Pellentesque dapibus tincidunt neque, non semper tortor fermentum vitae. Suspendisse potenti. Donec sit amet pellentesque nunc. Sed suscipit enim nec gravida faucibus. Cras eget cursus velit. Quisque porttitor tempor malesuada. Nullam et sodales eros, sed convallis augue. Fusce ullamcorper lacus metus, eu vestibulum enim auctor ac.",
+      "immagineUrl": "vediamo",
+      "nome": "test",
+      "prezzo": 5000
+    },
+    "Articolo5": {
+      "Categoria": "Mah",
+      "descrizione": "Integer venenatis interdum tincidunt. Pellentesque dapibus tincidunt neque, non semper tortor fermentum vitae. Suspendisse potenti. Donec sit amet pellentesque nunc. Sed suscipit enim nec gravida faucibus. Cras eget cursus velit. Quisque porttitor tempor malesuada. Nullam et sodales eros, sed convallis augue. Fusce ullamcorper lacus metus, eu vestibulum enim auctor ac.",
+      "immagineUrl": "vediamo",
+      "nome": "test",
+      "prezzo": 5000
+    }
+  }
+}

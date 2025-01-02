@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Card = ({ nome, foto, descrizione, prezzo, link, truncate = true }) => {
-  // Funzione per troncare il testo (descrizione) se necessario
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + '...';
@@ -9,10 +8,27 @@ const Card = ({ nome, foto, descrizione, prezzo, link, truncate = true }) => {
     return text;
   };
 
+  // const convertDriveLink = (url) => {
+  //   const match = url.match(/\/d\/(.*?)\//);
+  //   return match ? `https://drive.google.com/uc?export=view&id=${match[1]}` : url;
+  // };  
+
+  const handleImageError = (e) => {
+    console.error("Errore nel caricamento dell'immagine:", foto);
+    e.target.src = 'https://via.placeholder.com/360'; // Fallback
+  };
+
+  console.log("Rendering foto:", foto);
+
   return (
     <div className="col mb-5">
       <div className="card bacheca-card h-100">
-        <img className="card-img-top" src={foto} alt={nome} />
+        <img
+          className="card-img-top"
+          src={foto}
+          alt={nome}
+          onError={handleImageError}
+        />
         <div className="card-body p-4">
           <div className="text-center">
             <h5 className="fw-bolder">{nome}</h5>

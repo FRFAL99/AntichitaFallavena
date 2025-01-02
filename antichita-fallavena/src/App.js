@@ -14,7 +14,6 @@ import ChiSiamo from './pages/ChiSiamo';
 // CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-
 import './App.css';
 
 
@@ -37,7 +36,7 @@ function App() {
         <Route path="/Catalogo" element={<Catalogo />} />
         <Route path="/ChiSiamo" element={<ChiSiamo />} />
       </Routes>
-    
+
     <Footer /> 
   </Router>
   );
