@@ -1,29 +1,62 @@
-import React from 'react';
-import foto1 from '../assets/images/carosello/foto1.png';
-import foto2 from '../assets/images/carosello/foto2.png';
-import foto3 from '../assets/images/carosello/foto3.png';
+import React, { useEffect, useState } from 'react';
+import app from '../firebase-config';
+import { getDatabase, ref, get } from 'firebase/database';
 
 const Carousel = () => {
+  const [carouselItems, setCarouselItems] = useState([]);
+
+  useEffect(() => {
+    const fetchCarouselData = async () => {
+      const db = getDatabase(app);
+      const caroselloRef = ref(db, 'Carosello');
+
+      try {
+        const snapshot = await get(caroselloRef);
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const items = Object.values(data); // Trasforma in array
+          setCarouselItems(items);
+        } else {
+          console.log("Nessun dato trovato nel carosello.");
+        }
+      } catch (error) {
+        console.error("Errore durante il fetch dei dati:", error);
+      }
+    };
+
+    fetchCarouselData();
+  }, []);
+
   return (
     <header>
       <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          {carouselItems.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide-to={index}
+              className={index === 0 ? 'active' : ''}
+              aria-current={index === 0 ? 'true' : undefined}
+              aria-label={`Slide ${index + 1}`}
+            ></button>
+          ))}
         </div>
+
         <div className="carousel-inner">
-          {[foto1, foto2, foto3].map((foto, index) => (
+          {carouselItems.map((item, index) => (
             <div className={`carousel-item ${index === 0 ? "active" : ""}`} key={index}>
-              <img src={foto} className="d-block w-100" alt={`Immagine ${index + 1}`} />
+              <img src={item.img} className="d-block w-100" alt={`Immagine ${index + 1}`} />
               <div className="carousel-caption d-none d-md-block">
-                <h5>Titolo Immagine {index + 1}</h5>
-                <p>Descrizione per l'immagine {index + 1}.</p>
+                <h5>{item.titolo}</h5>
+                <p>{item.testo}</p>
                 <a href="#" className="btn btn-primary">Scopri di più</a>
               </div>
             </div>
           ))}
         </div>
+
         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Previous</span>
