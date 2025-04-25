@@ -1,0 +1,111 @@
+.page-content {
+    padding: 2rem;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  section {
+    margin-bottom: 4rem;
+  }
+  
+  h3 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .company-history p,
+  .mission-values p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  ul {
+    list-style-type: disc;
+    margin-left: 2rem;
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .our-team {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .team-member {
+    text-align: center;
+    width: 30%;
+  }
+  
+  .team-member img {
+    width: 100%;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+  }
+  
+  .contact-info a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsività per schermi più piccoli */
+  @media (max-width: 768px) {
+    .our-team {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .team-member {
+      width: 80%;
+      margin-bottom: 2rem;
+    }
+  
+    .company-history p,
+    .mission-values p,
+    ul {
+      width: 90%;
+    }
+  
+    h2 {
+      font-size: 2rem;
+    }
+  
+    h3 {
+      font-size: 1.8rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 1.8rem;
+    }
+  
+    h3 {
+      font-size: 1.6rem;
+    }
+  
+    .team-member {
+      width: 100%;
+    }
+  
+    .company-history p,
+    .mission-values p,
+    ul {
+      width: 95%;
+    }
+  }
+  

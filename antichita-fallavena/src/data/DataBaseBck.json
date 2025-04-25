@@ -3,16 +3,33 @@
     "Articolo1": {
       "Categoria": "casuale",
       "descrizione": "Integer venenatis interdum tincidunt. Pellentesque dapibus tincidunt neque, non semper tortor fermentum vitae. Suspendisse potenti. Donec sit amet pellentesque nunc. Sed suscipit enim nec gravida faucibus. Cras eget cursus velit. Quisque porttitor tempor malesuada. Nullam et sodales eros, sed convallis augue. Fusce ullamcorper lacus metus, eu vestibulum enim auctor ac.",
-      "immagineUrl": "https://static.wikia.nocookie.net/yugiohenespanol/images/9/93/Foto_mementotl%C3%A1n_akihiron.jpg/revision/latest?cb=20240804041259&path-prefix=es",
-      "nome": "test Prodotto tino cane",
+      "immagineUrl": "https://github.com/FRFAL99/ImmaginiSito/blob/main/images/sample.jpg?raw=true",
+      "nome": "test Prodotto ",
       "prezzo": 20
     },
     "Articolo2": {
       "Categoria": "casuale",
       "descrizione": "Integer venenatis interdum tincidunt. Pellentesque dapibus tincidunt neque, non semper tortor fermentum vitae. Suspendisse potenti. Donec sit amet pellentesque nunc. Sed suscipit enim nec gravida faucibus. Cras eget cursus velit. Quisque porttitor tempor malesuada. Nullam et sodales eros, sed convallis augue. Fusce ullamcorper lacus metus, eu vestibulum enim auctor ac.",
-      "immagineUrl": "https://static.wikia.nocookie.net/yugiohenespanol/images/9/93/Foto_mementotl%C3%A1n_akihiron.jpg/revision/latest?cb=20240804041259&path-prefix=es",
+      "immagineUrl": "https://github.com/FRFAL99/ImmaginiSito/blob/main/images/sample.jpg?raw=true",
       "nome": "test Prodottos",
       "prezzo": 45
+    }
+  },
+  "Carosello": {
+    "Pagina1": {
+      "img": "https://github.com/FRFAL99/ImmaginiSito/blob/main/images/Carosello/foto1.png?raw=true",
+      "testo": "Descrizione per l'immagine 1",
+      "titolo": "Titolo immagine 1"
+    },
+    "Pagina2": {
+      "img": "https://github.com/FRFAL99/ImmaginiSito/blob/main/images/Carosello/foto2.png?raw=true",
+      "testo": "Descrizione per l'immagine 2",
+      "titolo": "Titolo immagine 2"
+    },
+    "Pagina3": {
+      "img": "https://github.com/FRFAL99/ImmaginiSito/blob/main/images/Carosello/foto3.png?raw=true",
+      "testo": "Descrizione per l'immagine 3",
+      "titolo": "Titolo immagine 3"
     }
   },
   "Catalogo": {

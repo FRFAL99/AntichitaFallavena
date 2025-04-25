@@ -7,6 +7,7 @@ import Carousel from './components/Carousel';
 import Footer from './components/Footer';
 import Bacheca from './components/Bacheca';
 import MaintenanceBanner from './components/MaintenanceBanner'; 
+import ProductDetail from './components/ProductDetail'; // Importa il componente di dettaglio prodotto
 
 // Pagine
 import Catalogo from './pages/Catalogo';
@@ -37,6 +38,8 @@ function App() {
           />
           <Route path="/Catalogo" element={<Catalogo />} />
           <Route path="/ChiSiamo" element={<ChiSiamo />} />
+          {/* Nuova rotta per la pagina di dettaglio prodotto */}
+          <Route path="/prodotto/:id" element={<ProductDetail />} />
         </Routes>
         <Footer /> 
       </div>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import app from '../firebase-config';
 import { getDatabase, ref, get } from 'firebase/database';
+import './CSScomponents/Carousel.css'; 
 
 const Carousel = () => {
   const [carouselItems, setCarouselItems] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const fetchCarouselData = async () => {
@@ -27,44 +29,77 @@ const Carousel = () => {
     fetchCarouselData();
   }, []);
 
-  return (
-    <header>
-      <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
-        <div className="carousel-indicators">
-          {carouselItems.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide-to={index}
-              className={index === 0 ? 'active' : ''}
-              aria-current={index === 0 ? 'true' : undefined}
-              aria-label={`Slide ${index + 1}`}
-            ></button>
-          ))}
-        </div>
+  // Funzione per passare manualmente alla slide successiva
+  const nextSlide = () => {
+    setActiveIndex((prevIndex) => 
+      prevIndex === carouselItems.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
-        <div className="carousel-inner">
+  // Funzione per passare manualmente alla slide precedente
+  const prevSlide = () => {
+    setActiveIndex((prevIndex) => 
+      prevIndex === 0 ? carouselItems.length - 1 : prevIndex - 1
+    );
+  };
+
+  // Funzione per selezionare direttamente una slide
+  const goToSlide = (index) => {
+    setActiveIndex(index);
+  };
+
+  // Effetto per autoplay
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000); // Cambia slide ogni 5 secondi
+
+    return () => clearInterval(interval); // Pulizia all'unmount
+  }, [carouselItems, activeIndex]);
+
+  return (
+    <header className="modern-carousel-container">
+      <div className="modern-carousel">
+        <div className="carousel-inner-container">
           {carouselItems.map((item, index) => (
-            <div className={`carousel-item ${index === 0 ? "active" : ""}`} key={index}>
-              <img src={item.img} className="d-block w-100" alt={`Immagine ${index + 1}`} />
-              <div className="carousel-caption d-none d-md-block">
-                <h5>{item.titolo}</h5>
-                <p>{item.testo}</p>
-                <a href="#" className="btn btn-primary">Scopri di più</a>
+            <div 
+              className={`carousel-slide ${index === activeIndex ? "active" : ""}`} 
+              key={index}
+              style={{ backgroundImage: `url(${item.img})` }}
+            >
+              <div className="carousel-content">
+                <h2 className="slide-title">{item.titolo}</h2>
+                <p className="slide-description">{item.testo}</p>
+                <a href="#" className="btn-discover">Scopri di più</a>
               </div>
+              <div className="overlay"></div>
             </div>
           ))}
         </div>
 
-        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Previous</span>
+        {/* Frecce di navigazione */}
+        <button className="carousel-arrow carousel-arrow-prev" onClick={prevSlide}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
         </button>
-        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Next</span>
+        <button className="carousel-arrow carousel-arrow-next" onClick={nextSlide}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </button>
+
+        {/* Indicatori di slide */}
+        <div className="carousel-indicators">
+          {carouselItems.map((_, index) => (
+            <button
+              key={index}
+              className={`indicator ${index === activeIndex ? 'active' : ''}`}
+              onClick={() => goToSlide(index)}
+              aria-label={`Slide ${index + 1}`}
+            ></button>
+          ))}
+        </div>
       </div>
     </header>
   );

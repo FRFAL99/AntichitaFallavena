@@ -1,0 +1,268 @@
+/* Carousel.css - Stile moderno ed elegante per il carousel */
+
+/* Palette colori - puoi modificare questi valori per adattarli al tuo brand */
+:root {
+    --carousel-primary: #ffffff;
+    --carousel-accent: #EB5E28;  /* Usa lo stesso colore accent della navbar */
+    --carousel-text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    --carousel-overlay: rgba(0, 0, 0, 0.3);
+    --carousel-transition: all 0.5s ease;
+    --carousel-button-bg: rgba(255, 255, 255, 0.25);
+    --carousel-button-hover: rgba(255, 255, 255, 0.4);
+  }
+  
+  /* Container principale */
+  .modern-carousel-container {
+    position: relative;
+    height: 80vh;  /* Altezza del 80% della viewport */
+    max-height: 700px;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 60px;  /* Spazio per la navbar fixed */
+  }
+  
+  .modern-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Container delle slide */
+  .carousel-inner-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Slide individuali */
+  .carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease, visibility 1s ease;
+    /* Effetto parallasse leggero */
+    transform: scale(1.05);
+  }
+  
+  .carousel-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+    transform: scale(1);
+    transition: opacity 1s ease, visibility 1s ease, transform 8s ease;
+  }
+  
+  /* Overlay per migliorare la leggibilità del testo */
+  .carousel-slide .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+      rgba(0, 0, 0, 0.3) 0%, 
+      rgba(0, 0, 0, 0.5) 100%);
+    z-index: 2;
+  }
+  
+  /* Contenuto della slide */
+  .carousel-content {
+    position: absolute;
+    bottom: 15%;
+    left: 10%;
+    width: 80%;
+    z-index: 3;
+    text-align: left;
+    animation: fadeInUp 0.7s ease forwards;
+    opacity: 0;
+  }
+  
+  .carousel-slide.active .carousel-content {
+    opacity: 1;
+    animation: fadeInUp 0.7s ease forwards;
+    animation-delay: 0.3s;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Stile testo */
+  .slide-title {
+    color: var(--carousel-primary);
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: var(--carousel-text-shadow);
+    line-height: 1.2;
+    max-width: 800px;
+  }
+  
+  .slide-description {
+    color: var(--carousel-primary);
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-bottom: 1.5rem;
+    text-shadow: var(--carousel-text-shadow);
+    line-height: 1.5;
+  }
+  
+  /* Bottone "Scopri di più" */
+  .btn-discover {
+    display: inline-block;
+    background-color: var(--carousel-accent);
+    color: white;
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: var(--carousel-transition);
+    letter-spacing: 0.5px;
+    border: 2px solid var(--carousel-accent);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .btn-discover:hover {
+    background-color: transparent;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Frecce di navigazione */
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: var(--carousel-button-bg);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.7;
+    transition: var(--carousel-transition);
+    backdrop-filter: blur(5px);
+  }
+  
+  .carousel-arrow:hover {
+    opacity: 1;
+    background-color: var(--carousel-button-hover);
+  }
+  
+  .carousel-arrow-prev {
+    left: 20px;
+  }
+  
+  .carousel-arrow-next {
+    right: 20px;
+  }
+  
+  /* Indicatori slides */
+  .carousel-indicators {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+  }
+  
+  .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: var(--carousel-transition);
+    padding: 0;
+  }
+  
+  .indicator.active {
+    background-color: var(--carousel-accent);
+    width: 30px;
+    border-radius: 10px;
+  }
+  
+  .indicator:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 992px) {
+    .modern-carousel-container {
+      height: 70vh;
+    }
+    
+    .slide-title {
+      font-size: 2.5rem;
+    }
+    
+    .slide-description {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .modern-carousel-container {
+      height: 60vh;
+    }
+    
+    .carousel-content {
+      bottom: 20%;
+      text-align: center;
+      left: 5%;
+      width: 90%;
+    }
+    
+    .slide-title {
+      font-size: 2rem;
+    }
+    
+    .carousel-arrow {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .modern-carousel-container {
+      height: 50vh;
+    }
+    
+    .slide-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .slide-description {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .btn-discover {
+      padding: 8px 20px;
+      font-size: 0.9rem;
+    }
+  }

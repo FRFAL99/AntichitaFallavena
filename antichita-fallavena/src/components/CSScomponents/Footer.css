@@ -1,0 +1,209 @@
+/* Footer.css - Stile moderno per il footer */
+
+:root {
+    --footer-bg: #2a2d34;
+    --footer-bg-dark: #22252b;
+    --footer-text: #e6e6e6;
+    --footer-text-muted: #a0a0a0;
+    --footer-accent: #EB5E28;
+    --footer-border: rgba(255, 255, 255, 0.1);
+    --footer-link-hover: #ffffff;
+  }
+  
+  /* Container principale */
+  .footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    font-size: 0.95rem;
+  }
+  
+  /* Parte superiore del footer con le colonne */
+  .footer-top {
+    padding: 4rem 0 3rem;
+  }
+  
+  /* Logo nel footer */
+  .footer-logo-container {
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-logo {
+    height: 40px;
+    width: auto;
+    filter: invert(1);  /* Trasforma il nero in bianco */
+    -webkit-filter: invert(1);  /* Per compatibilità con Safari */
+  }
+  
+  /* Descrizione sotto il logo */
+  .footer-about {
+    color: var(--footer-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Social media icons */
+  .footer-social {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--footer-text);
+    transition: all 0.3s ease;
+  }
+  
+  .footer-social a:hover {
+    background-color: var(--footer-accent);
+    color: white;
+    transform: translateY(-3px);
+  }
+  
+  /* Titoli delle sezioni */
+  .footer-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1.2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+  
+  .footer-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background-color: var(--footer-accent);
+  }
+  
+  /* Liste di link */
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-links li {
+    margin-bottom: 0.7rem;
+  }
+  
+  .footer-links a {
+    color: var(--footer-text-muted);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+  
+  .footer-links a:hover {
+    color: var(--footer-link-hover);
+    transform: translateX(3px);
+  }
+  
+  /* Informazioni di contatto */
+  .footer-contact {
+    font-style: normal;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-contact p {
+    margin-bottom: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--footer-text-muted);
+  }
+  
+  .footer-contact svg {
+    color: var(--footer-accent);
+    flex-shrink: 0;
+  }
+  
+  /* Orari di apertura */
+  .footer-hours h6 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-hours p {
+    margin-bottom: 0.3rem;
+    color: var(--footer-text-muted);
+  }
+  
+  /* Parte inferiore del footer */
+  .footer-bottom {
+    background-color: var(--footer-bg-dark);
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--footer-border);
+  }
+  
+  .footer-copyright {
+    margin: 0;
+  }
+  
+  .footer-legal {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+  
+  .footer-legal a {
+    color: var(--footer-text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .footer-legal a:hover {
+    color: var(--footer-accent);
+  }
+  
+  .footer-separator {
+    color: var(--footer-text-muted);
+    margin: 0 0.5rem;
+  }
+  
+  /* Responsive per schermi più piccoli */
+  @media (max-width: 767.98px) {
+    .footer-top {
+      padding: 3rem 0 2rem;
+    }
+    
+    .footer-heading {
+      margin-top: 1.5rem;
+    }
+    
+    .footer-legal, .footer-copyright {
+      text-align: center;
+      justify-content: center;
+    }
+    
+    .footer-bottom .text-md-end {
+      text-align: center !important;
+      margin-top: 1rem;
+    }
+  }
+  
+  @media (max-width: 575.98px) {
+    .footer-social {
+      justify-content: center;
+    }
+    
+    .footer-logo-container {
+      text-align: center;
+    }
+    
+    .footer-about {
+      text-align: center;
+    }
+  }

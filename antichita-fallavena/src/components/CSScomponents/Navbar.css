@@ -1,0 +1,183 @@
+/* Palette colori personalizzata - puoi modificare questi valori */
+:root {
+    /* Colori principali - scegli quelli che si abbinano al tuo logo e brand */
+    --primary: #403D39;          /* Colore principale scuro - ottimo per il testo */
+    --secondary: #EB5E28;        /* Colore di accento/highlight - energetico e distintivo */
+    --light-bg: #FFFCF2;         /* Sfondo chiaro per la navbar */
+    --text: #252422;             /* Colore del testo principale - quasi nero ma più morbido */
+    --text-light: #CCC5B9;       /* Colore del testo più chiaro - per elementi secondari */
+    
+    /* Varianti hover e interazioni */
+    --hover-primary: #5D5A56;    /* Versione più chiara del primary per hover */
+    --hover-secondary: #FF7F50;  /* Versione più vivace del secondary per hover */
+    --hover-bg: rgba(235, 94, 40, 0.1); /* Sfondo hover trasparente basato sul secondary */
+    
+    /* Shadow e transizioni */
+    --box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);  /* Ombra delicata */
+    --transition: 0.3s ease;     /* Transizione standard */
+    --border-radius: 4px;        /* Raggio dei bordi per dropdown e altri elementi */
+}
+
+/* Stile base della navbar con sfondo personalizzato */
+.navbar {
+    background-color: var(--light-bg) !important;
+    box-shadow: var(--box-shadow);
+    transition: all var(--transition);
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+/* Link della navbar con colore personalizzato */
+.navbar-light .navbar-nav .nav-link {
+    color: var(--text);
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 1rem;
+    transition: color var(--transition);
+}
+
+/* Effetto hover con linea del colore secondary - SOLO SU HOVER */
+.navbar-light .navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0; /* Inizia a 0 così non è visibile */
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--secondary);
+    transition: all var(--transition);
+    opacity: 0; /* Rendiamo la linea invisibile per default */
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: var(--secondary);
+    transform: translateY(-1px); /* Leggero effetto di sollevamento */
+}
+
+.navbar-light .navbar-nav .nav-link:hover::after {
+    width: 80%; /* Non completamente 100% per un effetto più raffinato */
+    left: 10%;
+    opacity: 1; /* La linea diventa visibile su hover */
+}
+
+/* Stile per il link attivo */
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .nav-item.active .nav-link {
+    color: var(--secondary) !important;
+    font-weight: 600;
+}
+
+.navbar-light .navbar-nav .nav-link.active::after,
+.navbar-light .navbar-nav .nav-item.active .nav-link::after {
+    width: 80%;
+    left: 10%;
+    opacity: 1; /* La linea è visibile per elemento attivo */
+    background-color: var(--secondary);
+    height: 3px; /* Linea più spessa per elemento attivo */
+}
+
+/* Dropdown con stile moderno */
+.dropdown-menu {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden; /* Per mantenere gli angoli arrotondati nel dropdown */
+}
+
+.dropdown-item {
+    color: var(--text);
+    font-weight: 500;
+    padding: 0.7rem 1.5rem;
+    transition: all var(--transition);
+    border-left: 0px solid transparent;
+}
+
+.dropdown-item:hover {
+    background-color: var(--hover-bg);
+    color: var(--secondary);
+    padding-left: 1.8rem; /* Effetto di indentazione su hover */
+    border-left: 3px solid var(--secondary);
+}
+
+.dropdown-item.active {
+    background-color: var(--hover-bg);
+    color: var(--secondary);
+    font-weight: 600;
+    border-left: 3px solid var(--secondary);
+}
+
+/* Bandiere nel selettore lingua con effetto zoom */
+.dropdown-item img {
+    margin-right: 0.7rem;
+    transition: transform var(--transition);
+    vertical-align: middle;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2); /* Leggera ombra attorno alle bandiere */
+    border-radius: 2px;
+}
+
+.dropdown-item:hover img {
+    transform: scale(1.15);
+}
+
+/* Toggle button per mobile più elegante */
+.navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+    transition: all var(--transition);
+    background-color: transparent;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(235, 94, 40, 0.25);
+    outline: none;
+}
+
+/* Stilizzare l'icona del toggler */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(37, 36, 34, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    transition: all var(--transition);
+}
+
+.navbar-toggler:hover .navbar-toggler-icon {
+    opacity: 0.8;
+}
+
+/* Link del brand con un po' di padding */
+.navbar-brand {
+    padding: 0.5rem 0;
+    margin-right: 2rem;
+}
+
+/* Animazione per il logo */
+.navbar-brand img {
+    transition: transform var(--transition);
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.08);
+}
+
+/* Miglioramento del comportamento responsive */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0,0,0,0.05);
+        margin-top: 0.5rem;
+    }
+    
+    .language-menu {
+        position: absolute;
+        top: 15px;
+        right: 70px;
+    }
+    
+    /* Link più spaziati su mobile */
+    .navbar-light .navbar-nav .nav-link {
+        padding: 0.8rem 0;
+    }
+    
+    .dropdown-menu {
+        background-color: rgba(0,0,0,0.02);
+        padding: 0;
+    }
+}
