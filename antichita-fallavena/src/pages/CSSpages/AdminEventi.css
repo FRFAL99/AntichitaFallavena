@@ -1,0 +1,227 @@
+/* AdminEventi.css */
+
+.admin-eventi {
+  padding: 80px 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* AdminEventi.css */
+
+.admin-eventi {
+  padding: 80px 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.admin-header h1 {
+  color: var(--eventi-primary);
+  margin: 0;
+}
+
+.btn-logout {
+  background: transparent;
+  border: 2px solid var(--eventi-accent);
+  color: var(--eventi-accent);
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--eventi-transition);
+}
+
+.btn-logout:hover {
+  background: var(--eventi-accent);
+  color: white;
+}
+
+.selected-files {
+  color: var(--eventi-gray);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.upload-progress {
+  width: 100%;
+  height: 8px;
+  background: var(--eventi-border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--eventi-accent);
+  transition: width 0.3s ease;
+}
+
+table th:nth-child(5),
+table td:nth-child(5) {
+  text-align: center;
+}
+
+table td:nth-child(2) {
+  white-space: nowrap;
+}
+
+/* Form */
+.evento-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--eventi-shadow);
+  margin-bottom: 3rem;
+}
+
+.evento-form h2 {
+  color: var(--eventi-primary);
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--eventi-primary);
+  font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--eventi-border);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-row {
+  display: flex;
+  gap: 2rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.form-actions button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--eventi-transition);
+}
+
+.form-actions button[type="submit"] {
+  background: var(--eventi-accent);
+  color: white;
+  border: none;
+}
+
+.form-actions button[type="submit"]:hover {
+  background: var(--eventi-primary);
+}
+
+.form-actions button[type="button"] {
+  background: transparent;
+  border: 2px solid var(--eventi-border);
+  color: var(--eventi-primary);
+}
+
+.form-actions button[type="button"]:hover {
+  border-color: var(--eventi-accent);
+  color: var(--eventi-accent);
+}
+
+/* Lista eventi */
+.eventi-list {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--eventi-shadow);
+}
+
+.eventi-list h2 {
+  color: var(--eventi-primary);
+  margin-bottom: 1.5rem;
+}
+
+.eventi-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.eventi-list th,
+.eventi-list td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--eventi-border);
+}
+
+.eventi-list th {
+  background: var(--eventi-light);
+  color: var(--eventi-primary);
+  font-weight: 600;
+}
+
+.eventi-list td button {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--eventi-transition);
+}
+
+.eventi-list td button:first-child {
+  background: var(--eventi-accent);
+  color: white;
+  border: none;
+}
+
+.eventi-list td button:last-child {
+  background: #dc3545;
+  color: white;
+  border: none;
+}
+
+.eventi-list td button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .eventi-list {
+    overflow-x: auto;
+  }
+}

@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { GoogleAuthProvider } from './contexts/GoogleAuthContext';
+import GoogleProtectedRoute from './components/GoogleProtectedRoute';
 
 // Componenti
 import Navbar from './components/Navbar';
@@ -7,11 +9,13 @@ import Carousel from './components/Carousel';
 import Footer from './components/Footer';
 import Bacheca from './components/Bacheca';
 import MaintenanceBanner from './components/MaintenanceBanner'; 
-import ProductDetail from './components/ProductDetail'; // Importa il componente di dettaglio prodotto
+import ProductDetail from './components/ProductDetail';
 
 // Pagine
 import Catalogo from './pages/Catalogo';
 import ChiSiamo from './pages/ChiSiamo';
+import Eventi from './pages/Eventi';
+import AdminEventi from './pages/AdminEventi';
 
 // CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,30 +24,40 @@ import './App.css';
 
 function App() {
   return (
-    <Router>
-      <MaintenanceBanner />
+    <GoogleAuthProvider>
+      <Router>
+        <MaintenanceBanner />
 
-      <div style={{ display: process.env.REACT_APP_MAINTENANCE_MODE === 'true' ? 'none' : 'block' }}>
-        <Navbar /> 
-        <Routes>
-          <Route 
-            path="/" 
-            element={  
-              <>
-                <Carousel /> 
-                <Bacheca /> 
-              </>
-            }
-            key="home"  
-          />
-          <Route path="/Catalogo" element={<Catalogo />} />
-          <Route path="/ChiSiamo" element={<ChiSiamo />} />
-          {/* Nuova rotta per la pagina di dettaglio prodotto */}
-          <Route path="/prodotto/:id" element={<ProductDetail />} />
-        </Routes>
-        <Footer /> 
-      </div>
-    </Router>
+        <div style={{ display: process.env.REACT_APP_MAINTENANCE_MODE === 'true' ? 'none' : 'block' }}>
+          <Navbar /> 
+          <Routes>
+            <Route 
+              path="/" 
+              element={  
+                <>
+                  <Carousel /> 
+                  <Bacheca /> 
+                </>
+              }
+              key="home"  
+            />
+            <Route path="/Catalogo" element={<Catalogo />} />
+            <Route path="/ChiSiamo" element={<ChiSiamo />} />
+            <Route path="/Eventi" element={<Eventi />} />
+            <Route 
+              path="/admin/eventi" 
+              element={
+                <GoogleProtectedRoute>
+                  <AdminEventi />
+                </GoogleProtectedRoute>
+              } 
+            />
+            <Route path="/prodotto/:id" element={<ProductDetail />} />
+          </Routes>
+          <Footer /> 
+        </div>
+      </Router>
+    </GoogleAuthProvider>
   );
 }
 

@@ -1,111 +1,262 @@
-.page-content {
-    padding: 2rem;
-    max-width: 100%;
-    margin: 0 auto;
+/* ChiSiamo.css - Stile coerente con il design del sito */
+
+:root {
+  --chi-siamo-primary: #403D39;    /* Colore principale scuro */
+  --chi-siamo-accent: #EB5E28;     /* Colore di accento arancione */
+  --chi-siamo-light: #FFFCF2;      /* Sfondo chiaro */
+  --chi-siamo-border: #E5E5E5;     /* Colore bordi */
+  --chi-siamo-gray: #6c757d;       /* Grigio per testo secondario */
+  --chi-siamo-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --chi-siamo-transition: all 0.3s ease;
+}
+
+.chi-siamo-page {
+  padding-top: 80px; /* Per compensare la navbar fixed */
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 60px 0;
+  background: var(--chi-siamo-light);
+  border-bottom: 1px solid var(--chi-siamo-border);
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--chi-siamo-primary);
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.hero-section h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--chi-siamo-accent);
+  border-radius: 2px;
+}
+
+.hero-section .lead {
+  font-size: 1.25rem;
+  color: var(--chi-siamo-gray);
+}
+
+/* Storia Section */
+.storia-section {
+  background: #fff;
+}
+
+.storia-section h2 {
+  color: var(--chi-siamo-primary);
+  margin-bottom: 30px;
+  position: relative;
+  padding-bottom: 15px;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.storia-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--chi-siamo-accent);
+  border-radius: 2px;
+}
+
+.storia-section p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--chi-siamo-primary);
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+/* Valori Section */
+.valori-section {
+  background: var(--chi-siamo-light);
+}
+
+.valori-section h2 {
+  color: var(--chi-siamo-primary);
+  position: relative;
+  padding-bottom: 15px;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.valori-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--chi-siamo-accent);
+  border-radius: 2px;
+}
+
+.valori-section .card {
+  transition: var(--chi-siamo-transition);
+  border: none;
+  box-shadow: var(--chi-siamo-shadow);
+}
+
+.valori-section .card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.valori-section .card i {
+  color: var(--chi-siamo-accent);
+}
+
+.valori-section .card h4 {
+  color: var(--chi-siamo-primary);
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.valori-section .card p {
+  color: var(--chi-siamo-gray);
+}
+
+/* Contatti Section */
+.contatti-section {
+  background: var(--chi-siamo-light);
+}
+
+.contatti-section h2 {
+  color: var(--chi-siamo-primary);
+  font-size: 2.2rem;
+  font-weight: 700;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.contatti-section h5 {
+  color: var(--chi-siamo-primary);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.contatti-section p {
+  color: var(--chi-siamo-gray);
+}
+
+.contatti-section i {
+  color: var(--chi-siamo-accent);
+}
+
+.map-container {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--chi-siamo-shadow);
+}
+
+/* CTA Section */
+.cta-section {
+  background: #fff;
+}
+
+.cta-section h2 {
+  color: var(--chi-siamo-primary);
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.cta-section .lead {
+  color: var(--chi-siamo-gray);
+}
+
+.cta-section .btn-primary {
+  background-color: var(--chi-siamo-accent);
+  border-color: var(--chi-siamo-accent);
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  border-radius: 30px;
+  transition: var(--chi-siamo-transition);
+}
+
+.cta-section .btn-primary:hover {
+  background-color: var(--chi-siamo-primary);
+  border-color: var(--chi-siamo-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(235, 94, 40, 0.2);
+}
+
+/* Placeholder images */
+.placeholder-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--chi-siamo-gray);
+  font-style: italic;
+  border: 1px dashed var(--chi-siamo-border);
+  background: var(--chi-siamo-light);
+}
+
+/* Immagini con effetto hover */
+.hero-section img {
+  transition: var(--chi-siamo-transition);
+}
+
+.hero-section img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .hero-section {
+    padding: 40px 0;
   }
   
-  h2 {
+  .hero-section h1 {
     font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 2rem;
   }
   
-  section {
-    margin-bottom: 4rem;
+  .hero-section .lead {
+    font-size: 1.1rem;
   }
   
-  h3 {
+  .storia-section h2,
+  .valori-section h2,
+  .contatti-section h2,
+  .cta-section h2 {
     font-size: 2rem;
-    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-section h1 {
+    font-size: 2rem;
   }
   
-  .company-history p,
-  .mission-values p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    width: 80%;
-    margin: 0 auto;
+  .storia-section h2,
+  .valori-section h2,
+  .contatti-section h2,
+  .cta-section h2 {
+    font-size: 1.8rem;
   }
   
-  ul {
-    list-style-type: disc;
-    margin-left: 2rem;
-    width: 80%;
-    margin: 0 auto;
+  .hero-section .lead {
+    font-size: 1rem;
   }
   
-  .our-team {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-top: 2rem;
-    flex-wrap: wrap;
+  .storia-section p {
+    font-size: 1rem;
   }
   
-  .team-member {
-    text-align: center;
-    width: 30%;
+  .cta-section .btn-primary {
+    padding: 0.6rem 1.5rem;
   }
-  
-  .team-member img {
-    width: 100%;
-    border-radius: 50%;
-    margin-bottom: 1.5rem;
-  }
-  
-  .contact-info a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .contact-info a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Responsività per schermi più piccoli */
-  @media (max-width: 768px) {
-    .our-team {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .team-member {
-      width: 80%;
-      margin-bottom: 2rem;
-    }
-  
-    .company-history p,
-    .mission-values p,
-    ul {
-      width: 90%;
-    }
-  
-    h2 {
-      font-size: 2rem;
-    }
-  
-    h3 {
-      font-size: 1.8rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    h2 {
-      font-size: 1.8rem;
-    }
-  
-    h3 {
-      font-size: 1.6rem;
-    }
-  
-    .team-member {
-      width: 100%;
-    }
-  
-    .company-history p,
-    .mission-values p,
-    ul {
-      width: 95%;
-    }
-  }
-  
+}

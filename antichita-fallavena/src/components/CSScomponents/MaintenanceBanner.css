@@ -1,29 +1,120 @@
+/* MaintenanceBanner.css */
+
 .maintenance-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Sfondo scuro ma più opaco */
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 9999; /* Assicurati che venga sopra tutti gli altri contenuti */
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
 }
 
 .maintenance-banner {
-  background-color: #858282; /* Colore di sfondo scuro per il banner */
-  color: #f1c40f; /* Colore giallo per il testo */
-  padding: 20px 30px;
   text-align: center;
-  font-size: 1.5em;
-  font-weight: bold;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   max-width: 600px;
   width: 100%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Leggero ombreggiamento per dare profondità */
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.maintenance-icon {
+  margin-bottom: 30px;
+}
+
+.maintenance-icon svg {
+  width: 80px;
+  height: 80px;
+  fill: #ffd700;
+  animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+  from { 
+    transform: rotate(0deg); 
+  }
+  to { 
+    transform: rotate(360deg); 
+  }
 }
 
 .maintenance-banner h2 {
-  margin: 0;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #ffd700;
+  font-weight: 700;
+}
+
+.maintenance-banner p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: #e0e0e0;
+}
+
+.maintenance-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 215, 0, 0.2);
+  border-radius: 2px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.maintenance-progress::after {
+  content: '';
+  display: block;
+  width: 60%;
+  height: 100%;
+  background: #ffd700;
+  border-radius: 2px;
+}
+
+.maintenance-contact {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  margin-top: 20px;
+}
+
+.maintenance-contact a {
+  color: #ffd700;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.maintenance-contact a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .maintenance-banner h2 {
+    font-size: 2rem;
+  }
+  
+  .maintenance-banner p {
+    font-size: 1rem;
+  }
+  
+  .maintenance-banner {
+    padding: 30px 20px;
+  }
 }
