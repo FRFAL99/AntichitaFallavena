@@ -16,6 +16,8 @@ import Catalogo from './pages/Catalogo';
 import ChiSiamo from './pages/ChiSiamo';
 import Eventi from './pages/Eventi';
 import AdminEventi from './pages/AdminEventi';
+import AdminProdotti from './pages/AdminProdotti';
+import AdminDashboard from './pages/AdminDashboard'; // NUOVO IMPORT
 
 // CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -44,11 +46,29 @@ function App() {
             <Route path="/Catalogo" element={<Catalogo />} />
             <Route path="/ChiSiamo" element={<ChiSiamo />} />
             <Route path="/Eventi" element={<Eventi />} />
+            
+            <Route 
+              path="/admin" 
+              element={
+                <GoogleProtectedRoute>
+                  <AdminDashboard />
+                </GoogleProtectedRoute>
+              } 
+            />
+            
             <Route 
               path="/admin/eventi" 
               element={
                 <GoogleProtectedRoute>
                   <AdminEventi />
+                </GoogleProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/prodotti" 
+              element={
+                <GoogleProtectedRoute>
+                  <AdminProdotti />
                 </GoogleProtectedRoute>
               } 
             />

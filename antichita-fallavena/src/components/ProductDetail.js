@@ -5,11 +5,19 @@ import app from '../firebase-config';
 import './CSScomponents/ProductDetail.css';
 
 const ProductDetail = () => {
-  const { id } = useParams(); // Ottiene l'ID prodotto dall'URL
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  
+  // Numero massimo di immagini da mostrare
+  const MAX_IMAGES = 6;
+  // Numero massimo di immagini per la visualizzazione in fila
+  const MAX_THUMBNAILS_PER_ROW = 4;
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -17,7 +25,6 @@ const ProductDetail = () => {
         setLoading(true);
         const db = getDatabase(app);
         
-        // Recupera tutti i prodotti dalla bacheca
         const bachecaRef = ref(db, 'Bacheca');
         const snapshot = await get(bachecaRef);
         
@@ -25,14 +32,12 @@ const ProductDetail = () => {
           let foundProduct = null;
           const allProducts = [];
           
-          // Itera su tutti i nodi della bacheca
           snapshot.forEach((childSnapshot) => {
             const productData = childSnapshot.val();
-            productData.id = childSnapshot.key; // Aggiungi l'ID (chiave Firebase)
+            productData.id = childSnapshot.key;
             
             allProducts.push(productData);
             
-            // Controlla se questo è il prodotto che stiamo cercando
             if (childSnapshot.key === id) {
               foundProduct = productData;
             }
@@ -41,11 +46,10 @@ const ProductDetail = () => {
           if (foundProduct) {
             setProduct(foundProduct);
             
-            // Trova prodotti correlati (stessa categoria)
             if (foundProduct.Categoria) {
               const related = allProducts
                 .filter(p => p.Categoria === foundProduct.Categoria && p.id !== id)
-                .slice(0, 4); // Prendi solo i primi 4 prodotti correlati
+                .slice(0, 4);
               setRelatedProducts(related);
             }
           } else {
@@ -67,21 +71,82 @@ const ProductDetail = () => {
     }
   }, [id]);
 
-  // Formatta il prezzo in Euro
+  // Ottieni tutte le immagini del prodotto con limite
+  const getProductImages = () => {
+    if (!product) return [];
+    
+    let images = [];
+    
+    // Se hai un array di immagini
+    if (product.immagini && Array.isArray(product.immagini)) {
+      images = product.immagini.slice(0, MAX_IMAGES); // Limita al numero massimo
+    }
+    // Se hai un oggetto di immagini
+    else if (product.immagini && typeof product.immagini === 'object') {
+      images = Object.values(product.immagini)
+        .filter(Boolean)
+        .slice(0, MAX_IMAGES); // Limita al numero massimo
+    }
+    // Fallback al campo singolo 'immagineUrl'
+    else if (product.immagineUrl) {
+      images = [product.immagineUrl];
+    }
+    
+    // Se non ci sono immagini, usa un placeholder
+    if (images.length === 0) {
+      images = ['https://via.placeholder.com/600x400?text=Immagine+non+disponibile'];
+    }
+    
+    return images;
+  };
+
+  const productImages = getProductImages();
+  const hasMoreImages = product?.immagini?.length > MAX_IMAGES;
+
   const formatPrice = (price) => {
     if (!price) return "Prezzo su richiesta";
     
-    // Controlla se il prezzo è già una stringa formattata
     if (typeof price === 'string' && price.includes('€')) {
       return price;
     }
     
-    // Altrimenti formatta il numero
     return new Intl.NumberFormat('it-IT', {
       style: 'currency',
       currency: 'EUR'
     }).format(price);
   };
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: product.nome,
+        text: `Dai un'occhiata a questo: ${product.nome}`,
+        url: window.location.href,
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copiato negli appunti!');
+    }
+  };
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+    // Qui puoi aggiungere la logica per salvare nei preferiti
+  };
+
+  // Gestione navigazione immagini con frecce da tastiera
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft' && selectedImage > 0) {
+        setSelectedImage(prev => prev - 1);
+      } else if (e.key === 'ArrowRight' && selectedImage < productImages.length - 1) {
+        setSelectedImage(prev => prev + 1);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage, productImages.length]);
 
   if (loading) {
     return (
@@ -119,20 +184,98 @@ const ProductDetail = () => {
               <div className="product-detail-gallery">
                 <div className="product-main-image">
                   <img 
-                    src={product.immagineUrl || 'https://via.placeholder.com/600x400?text=Immagine+non+disponibile'} 
+                    src={productImages[selectedImage]} 
                     alt={product.nome} 
-                    className="main-image"
+                    className={`main-image ${isZoomed ? 'zoomed' : ''}`}
+                    onClick={() => setIsZoomed(!isZoomed)}
                   />
                   {product.Categoria && (
                     <span className="product-detail-category">{product.Categoria}</span>
                   )}
+                  
+                  <button 
+                    className="zoom-button" 
+                    onClick={() => setIsZoomed(!isZoomed)}
+                    aria-label={isZoomed ? "Riduci zoom" : "Ingrandisci"}
+                  >
+                    {isZoomed ? "−" : "+"}
+                  </button>
+                  
+                  {/* Frecce per navigare tra le immagini */}
+                  {productImages.length > 1 && (
+                    <>
+                      {selectedImage > 0 && (
+                        <button 
+                          className="gallery-nav-button prev"
+                          onClick={() => setSelectedImage(prev => prev - 1)}
+                          aria-label="Immagine precedente"
+                        >
+                          ‹
+                        </button>
+                      )}
+                      {selectedImage < productImages.length - 1 && (
+                        <button 
+                          className="gallery-nav-button next"
+                          onClick={() => setSelectedImage(prev => prev + 1)}
+                          aria-label="Immagine successiva"
+                        >
+                          ›
+                        </button>
+                      )}
+                    </>
+                  )}
                 </div>
                 
-                {/* Se in futuro avrai più immagini, potrai aggiungere una galleria qui */}
+                {/* Thumbnails - Mostra solo se ci sono più immagini */}
+                {productImages.length > 1 && (
+                  <div className="product-thumbnails">
+                    {productImages.map((img, index) => (
+                      <button
+                        key={index}
+                        className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
+                        onClick={() => setSelectedImage(index)}
+                        aria-label={`Vista ${index + 1}`}
+                      >
+                        <img src={img} alt={`Vista ${index + 1}`} />
+                      </button>
+                    ))}
+                    {hasMoreImages && (
+                      <div className="more-images-indicator">
+                        +{product.immagini.length - MAX_IMAGES} altre
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
               
               <div className="product-detail-info">
-                <h1 className="product-detail-title">{product.nome}</h1>
+                <div className="product-detail-header">
+                  <h1 className="product-detail-title">{product.nome}</h1>
+                  <div className="product-detail-actions">
+                    {/* <button 
+                      className={`btn-favorite ${isFavorite ? 'active' : ''}`}
+                      onClick={toggleFavorite}
+                      aria-label={isFavorite ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill={isFavorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                      </svg>
+                    </button> */}
+                    <button 
+                      className="btn-share"
+                      onClick={handleShare}
+                      aria-label="Condividi"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
                 
                 <div className="product-detail-price">
                   {formatPrice(product.prezzo)}
@@ -143,17 +286,85 @@ const ProductDetail = () => {
                   <p>{product.descrizione}</p>
                 </div>
                 
-                {/* Dettagli aggiuntivi (se disponibili) */}
-                <div className="product-detail-additional">
+                <div className="product-detail-specs">
                   <h3>Dettagli prodotto</h3>
-                  <ul>
-                    {product.Categoria && <li><strong>Categoria:</strong> {product.Categoria}</li>}
-                    {product.anno && <li><strong>Anno:</strong> {product.anno}</li>}
-                    {product.condizione && <li><strong>Condizione:</strong> {product.condizione}</li>}
-                    {product.dimensioni && <li><strong>Dimensioni:</strong> {product.dimensioni}</li>}
-                    {product.origine && <li><strong>Origine:</strong> {product.origine}</li>}
-                  </ul>
+                  <div className="specs-grid">
+                    {product.Categoria && (
+                      <div className="spec-item">
+                        <span className="spec-label">Categoria</span>
+                        <span className="spec-value">{product.Categoria}</span>
+                      </div>
+                    )}
+                    {product.anno && (
+                      <div className="spec-item">
+                        <span className="spec-label">Anno/Epoca</span>
+                        <span className="spec-value">{product.anno}</span>
+                      </div>
+                    )}
+                    {product.condizione && (
+                      <div className="spec-item">
+                        <span className="spec-label">Condizione</span>
+                        <span className="spec-value">{product.condizione}</span>
+                      </div>
+                    )}
+                    {product.dimensioni && (
+                      <div className="spec-item">
+                        <span className="spec-label">Dimensioni</span>
+                        <span className="spec-value">{product.dimensioni}</span>
+                      </div>
+                    )}
+                    {product.materiali && (
+                      <div className="spec-item">
+                        <span className="spec-label">Materiali</span>
+                        <span className="spec-value">{product.materiali}</span>
+                      </div>
+                    )}
+                    {product.origine && (
+                      <div className="spec-item">
+                        <span className="spec-label">Origine</span>
+                        <span className="spec-value">{product.origine}</span>
+                      </div>
+                    )}
+                    {product.codice && (
+                      <div className="spec-item">
+                        <span className="spec-label">Codice articolo</span>
+                        <span className="spec-value">{product.codice}</span>
+                      </div>
+                    )}
+                    {product.numeroPezzi && (
+                      <div className="spec-item">
+                        <span className="spec-label">Numero pezzi</span>
+                        <span className="spec-value">{product.numeroPezzi}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
+                
+                {/* Garanzie e Servizi */}
+                {/* <div className="product-features">
+                  <div className="feature-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <span>Garanzia di autenticità</span>
+                  </div>
+                  <div className="feature-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="1" y="3" width="15" height="13"></rect>
+                      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                      <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                      <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                    </svg>
+                    <span>Spedizione assicurata</span>
+                  </div>
+                  <div className="feature-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    <span>Politica di reso</span>
+                  </div>
+                </div> */}
                 
                 <div className="product-detail-contact">
                   <a href="tel:+391234567890" className="btn-contact">
@@ -176,7 +387,7 @@ const ProductDetail = () => {
             {/* Prodotti correlati */}
             {relatedProducts.length > 0 && (
               <div className="related-products">
-                <h2>Prodotti correlati</h2>
+                <h2>Potrebbero interessarti</h2>
                 <div className="related-products-grid">
                   {relatedProducts.map((relatedProduct, index) => (
                     <div className="related-product-card" key={index}>

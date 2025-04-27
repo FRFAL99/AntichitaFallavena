@@ -191,7 +191,28 @@ const AdminEventi = () => {
   return (
     <div className="admin-eventi">
       <div className="admin-header">
-        <h1>Gestione Eventi</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button 
+            onClick={() => navigate('/admin')} 
+            style={{
+              background: 'transparent',
+              border: '2px solid #403D39',
+              color: '#403D39',
+              padding: '0.5rem 1rem',
+              borderRadius: '30px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Dashboard
+          </button>
+          <h1>Gestione Eventi</h1>
+        </div>
         <button onClick={handleLogout} className="btn-logout">
           Logout
         </button>
