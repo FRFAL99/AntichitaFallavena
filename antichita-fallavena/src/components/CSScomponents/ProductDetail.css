@@ -10,6 +10,7 @@
   --detail-border: #e9ecef;     /* Bordi */
   --detail-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); /* Ombra */
   --detail-transition: all 0.3s ease; /* Transizione */
+  --whatsapp-green: #25D366;    /* Colore WhatsApp */
 }
 
 /* Container principale */
@@ -122,6 +123,24 @@
   display: flex;
   gap: 10px;
   margin-top: 15px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--detail-accent) var(--detail-light-gray);
+}
+
+.product-thumbnails::-webkit-scrollbar {
+  height: 6px;
+}
+
+.product-thumbnails::-webkit-scrollbar-track {
+  background: var(--detail-light-gray);
+  border-radius: 3px;
+}
+
+.product-thumbnails::-webkit-scrollbar-thumb {
+  background-color: var(--detail-accent);
+  border-radius: 3px;
 }
 
 .thumbnail {
@@ -271,7 +290,8 @@
 }
 
 .btn-contact,
-.btn-email {
+.btn-email,
+.btn-whatsapp {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -281,6 +301,10 @@
   font-weight: 600;
   text-decoration: none;
   transition: var(--detail-transition);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
 }
 
 .btn-contact {
@@ -295,6 +319,35 @@
   border: 2px solid var(--detail-primary);
 }
 
+/* Stile per il pulsante WhatsApp */
+.btn-whatsapp {
+  background-color: var(--whatsapp-green);
+  color: white;
+  border: 2px solid var(--whatsapp-green);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-whatsapp::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: all 0.6s;
+}
+
+.btn-whatsapp:hover::before {
+  left: 100%;
+}
+
 .btn-contact:hover {
   background-color: transparent;
   color: var(--detail-accent);
@@ -307,6 +360,12 @@
   color: white;
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(64, 61, 57, 0.2);
+}
+
+.btn-whatsapp:hover {
+  background-color: #128C7E; /* WhatsApp dark green */
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
 }
 
 /* Prodotti correlati */
@@ -436,6 +495,54 @@
   margin-bottom: 1rem;
 }
 
+/* Navigazione galleria immagini */
+.gallery-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  color: var(--detail-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--detail-transition);
+  z-index: 2;
+}
+
+.gallery-nav-button:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.gallery-nav-button.prev {
+  left: 15px;
+}
+
+.gallery-nav-button.next {
+  right: 15px;
+}
+
+/* Indicatore immagini extra */
+.more-images-indicator {
+  width: 80px;
+  height: 80px;
+  border: 2px solid var(--detail-border);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: var(--detail-gray);
+  background-color: var(--detail-light-gray);
+  cursor: default;
+}
+
 /* Responsive design */
 @media (max-width: 991px) {
   .product-detail-main {
@@ -487,204 +594,12 @@
   }
   
   .btn-contact,
-  .btn-email {
+  .btn-email,
+  .btn-whatsapp {
       padding: 0.7rem 1rem;
       font-size: 0.9rem;
   }
   
-  .product-thumbnails {
-      justify-content: center;
-  }
-  
-  .thumbnail {
-      width: 60px;
-      height: 60px;
-  }
-}
-
-/* Accessibilità */
-.btn-favorite:focus,
-.btn-share:focus,
-.zoom-button:focus,
-.thumbnail:focus {
-  outline: 2px solid var(--detail-accent);
-  outline-offset: 2px;
-}
-
-/* Animazioni aggiuntive */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.product-detail-main {
-  animation: fadeIn 0.5s ease-out;
-}
-
-/* Stili per il modal di zoom (opzionale) */
-.zoom-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 2rem;
-}
-
-.zoom-modal img {
-  max-width: 90%;
-  max-height: 90vh;
-  object-fit: contain;
-}
-
-.zoom-modal-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 2rem;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: var(--detail-transition);
-}
-
-.zoom-modal-close:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Stili per il tooltip (opzionale) */
-.tooltip {
-  position: absolute;
-  background-color: var(--detail-primary);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: 0.875rem;
-  bottom: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
-}
-
-.tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: var(--detail-primary) transparent transparent transparent;
-}
-
-.btn-favorite:hover .tooltip,
-.btn-share:hover .tooltip {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Animazione per i prodotti correlati */
-.related-product-card {
-  animation: fadeIn 0.5s ease-out;
-  animation-fill-mode: both;
-}
-
-.related-product-card:nth-child(1) { animation-delay: 0.1s; }
-.related-product-card:nth-child(2) { animation-delay: 0.2s; }
-.related-product-card:nth-child(3) { animation-delay: 0.3s; }
-.related-product-card:nth-child(4) { animation-delay: 0.4s; }
-
-
-/* Navigazione galleria immagini */
-.gallery-nav-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(255, 255, 255, 0.8);
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  color: var(--detail-primary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--detail-transition);
-  z-index: 2;
-}
-
-.gallery-nav-button:hover {
-  background-color: rgba(255, 255, 255, 0.9);
-  transform: translateY(-50%) scale(1.1);
-}
-
-.gallery-nav-button.prev {
-  left: 15px;
-}
-
-.gallery-nav-button.next {
-  right: 15px;
-}
-
-/* Indicatore immagini extra */
-.more-images-indicator {
-  width: 80px;
-  height: 80px;
-  border: 2px solid var(--detail-border);
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  color: var(--detail-gray);
-  background-color: var(--detail-light-gray);
-  cursor: default;
-}
-
-/* Layout thumbnails con gestione overflow */
-.product-thumbnails {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--detail-accent) var(--detail-light-gray);
-}
-
-.product-thumbnails::-webkit-scrollbar {
-  height: 6px;
-}
-
-.product-thumbnails::-webkit-scrollbar-track {
-  background: var(--detail-light-gray);
-  border-radius: 3px;
-}
-
-.product-thumbnails::-webkit-scrollbar-thumb {
-  background-color: var(--detail-accent);
-  border-radius: 3px;
-}
-
-/* Regole specifiche per schermi piccoli */
-@media (max-width: 576px) {
   .product-thumbnails {
       justify-content: flex-start;
       padding: 0 5px 10px;
@@ -717,3 +632,34 @@
       right: 10px;
   }
 }
+
+/* Accessibilità */
+.btn-favorite:focus,
+.btn-share:focus,
+.zoom-button:focus,
+.thumbnail:focus,
+.btn-whatsapp:focus {
+  outline: 2px solid var(--detail-accent);
+  outline-offset: 2px;
+}
+
+/* Animazioni aggiuntive */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.product-detail-main {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Animazione per i prodotti correlati */
+.related-product-card {
+  animation: fadeIn 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+.related-product-card:nth-child(1) { animation-delay: 0.1s; }
+.related-product-card:nth-child(2) { animation-delay: 0.2s; }
+.related-product-card:nth-child(3) { animation-delay: 0.3s; }
+.related-product-card:nth-child(4) { animation-delay: 0.4s; }

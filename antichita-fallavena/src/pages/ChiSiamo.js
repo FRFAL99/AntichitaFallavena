@@ -37,7 +37,7 @@ const ChiSiamo = () => {
             <div className="col-lg-8 mx-auto">
               <h2 className="text-center mb-4">La Nostra Storia</h2>
               <p>
-                Antichità Fallavena nasce nel 1970 dalla passione di Giovanni Fallavena 
+                Antichità Fallavena nasce nel 1970 dalla passione di Fabrizio Fallavena 
                 per il restauro e la conservazione di mobili e oggetti d'epoca. Situato 
                 nel cuore di Verona, il nostro negozio è diventato un punto di riferimento 
                 per collezionisti, arredatori e appassionati d'arte.

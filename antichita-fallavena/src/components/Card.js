@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './CSScomponents/Card.css';
 
-const Card = ({ nome, foto, descrizione, prezzo, categoria, id }) => {
+const Card = ({ nome, foto, descrizione, prezzo, categoria, epoca, id }) => {
   const [isHovered, setIsHovered] = useState(false);
   
   // Formatta il prezzo in Euro
@@ -46,9 +46,14 @@ const Card = ({ nome, foto, descrizione, prezzo, categoria, id }) => {
           <span className="product-category">{categoria}</span>
         )}
         
+        {/* Badge epoca - visibile se disponibile */}
+        {epoca && (
+          <span className="product-epoca">{epoca}</span>
+        )}
+        
         <div className={`card-overlay ${isHovered ? 'visible' : ''}`}>
           <div className="card-actions">
-            <Link to={`/prodotto/${id}`} className="card-btn view-btn">
+            <Link to={`/antiquariato/${id}`} className="card-btn view-btn">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
@@ -60,7 +65,7 @@ const Card = ({ nome, foto, descrizione, prezzo, categoria, id }) => {
       </div>
       
       <div className="card-content">
-        <h3 className="product-title">{nome || "Prodotto"}</h3>
+        <h3 className="product-title">{nome || "Antiquariato"}</h3>
         <p className="product-description">{truncateDescription(descrizione)}</p>
         
         <div className="product-footer">
