@@ -2,35 +2,40 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './CSScomponents/Card.css';
 
-const Card = ({ nome, foto, descrizione, prezzo, categoria, epoca, id }) => {
+const Card = ({ nome, foto, descrizione, prezzo, categoria, epoca, id, cardSize = 'medium' }) => {
   const [isHovered, setIsHovered] = useState(false);
   
   // Formatta il prezzo in Euro
   const formatPrice = (price) => {
     if (!price) return "Prezzo su richiesta";
     
-    // Controlla se il prezzo è già una stringa formattata
     if (typeof price === 'string' && price.includes('€')) {
       return price;
     }
     
-    // Altrimenti formatta il numero
     return new Intl.NumberFormat('it-IT', {
       style: 'currency',
       currency: 'EUR'
     }).format(price);
   };
   
-  // Tronca la descrizione se è troppo lunga
-  const truncateDescription = (text, maxLength = 100) => {
+  // Tronca la descrizione in base alla dimensione della card
+  const truncateDescription = (text) => {
     if (!text) return "";
+    
+    // Lunghezza massima in base alla dimensione della card
+    const maxLength = cardSize === 'small' ? 50 : (cardSize === 'large' ? 150 : 100);
+    
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength) + "...";
   };
 
+  // Aggiungi la classe della dimensione alla card
+  const cardClasses = `product-card product-card-${cardSize}`;
+
   return (
     <div 
-      className="product-card"
+      className={cardClasses}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -53,7 +58,7 @@ const Card = ({ nome, foto, descrizione, prezzo, categoria, epoca, id }) => {
         
         <div className={`card-overlay ${isHovered ? 'visible' : ''}`}>
           <div className="card-actions">
-            <Link to={`/antiquariato/${id}`} className="card-btn view-btn">
+            <Link to={`/prodotto/${id}`} className="card-btn view-btn">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>

@@ -1,0 +1,119 @@
+/* src/components/catalog/CssCatalog/CatalogStats.css */
+.catalogo-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    background-color: white;
+    padding: 1.25rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid #E5E5E5;
+    animation: fadeIn 0.6s ease-out;
+    position: relative;
+  }
+  
+  .catalogo-stats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #D4AF37, #B8860B);
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .stats-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 120px;
+    padding: 0.75rem;
+    border-right: 1px solid #E5E5E5;
+    text-align: center;
+  }
+  
+  .stats-item:last-child {
+    border-right: none;
+  }
+  
+  .stats-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #FFFCF2;
+    color: #D4AF37;
+    margin-bottom: 0.75rem;
+    transition: all 0.3s ease;
+  }
+  
+  .stats-item:hover .stats-icon {
+    background-color: #D4AF37;
+    color: white;
+    transform: scale(1.05);
+  }
+  
+  .stats-number {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #403D39;
+    margin-bottom: 0.25rem;
+    line-height: 1;
+  }
+  
+  .stats-label {
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: 500;
+  }
+  
+  @media (max-width: 768px) {
+    .catalogo-stats {
+      flex-wrap: wrap;
+    }
+    
+    .stats-item {
+      min-width: 50%;
+      border-right: none;
+      border-bottom: 1px solid #E5E5E5;
+      margin-bottom: 0.5rem;
+      padding-bottom: 1rem;
+    }
+    
+    .stats-item:nth-last-child(-n+2) {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .stats-item {
+      min-width: 100%;
+    }
+    
+    .stats-item:nth-last-child(-n+2) {
+      border-bottom: 1px solid #E5E5E5;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stats-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

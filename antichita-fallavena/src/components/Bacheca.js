@@ -8,7 +8,7 @@ const Bacheca = () => {
   const [arrayBacheca, setBachecaArray] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+  //const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('default');
   const [categories, setCategories] = useState([]);
@@ -103,13 +103,13 @@ const Bacheca = () => {
     }
     
     // Applica filtro per ricerca testuale
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      result = result.filter(item => 
-        (item.nome?.toLowerCase().includes(term) || false) || 
-        (item.descrizione?.toLowerCase().includes(term) || false)
-      );
-    }
+    // if (searchTerm) {
+    //   const term = searchTerm.toLowerCase();
+    //   result = result.filter(item => 
+    //     (item.nome?.toLowerCase().includes(term) || false) || 
+    //     (item.descrizione?.toLowerCase().includes(term) || false)
+    //   );
+    // }
     
     // Applica ordinamento
     switch(sortBy) {
@@ -148,7 +148,7 @@ const Bacheca = () => {
     }
     
     setFilteredItems(result);
-  }, [arrayBacheca, selectedCategory, searchTerm, sortBy]);
+  }, [arrayBacheca, selectedCategory, sortBy]);
 
   // Carica più elementi
   const loadMore = () => {
@@ -164,7 +164,7 @@ const Bacheca = () => {
         </div>
 
         {/* Barra di filtri e ricerca */}
-        <div className="filters-container">
+        {/* <div className="filters-container">
           <div className="search-box">
             <input
               type="text"
@@ -181,7 +181,6 @@ const Bacheca = () => {
           </div>
           
           <div className="filter-options">
-            {/* Mostra il filtro categoria solo se ci sono categorie */}
             {categories.length > 0 && (
               <select 
                 className="filter-select"
@@ -207,7 +206,7 @@ const Bacheca = () => {
               <option value="name-desc">Nome: Z-A</option>
             </select>
           </div>
-        </div>
+        </div> */}
 
         {isLoading ? (
           <div className="loading-container">

@@ -1,0 +1,143 @@
+/* src/components/catalog/EpochsShowcase.css */
+.epochs-showcase {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.8s ease-out;
+    position: relative;
+  }
+  
+  .epochs-showcase::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, #EB5E28, #D4AF37, #EB5E28);
+  }
+  
+  .epochs-title {
+    font-size: 1.6rem;
+    color: #403D39;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+  }
+  
+  .epochs-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background-color: #D4AF37;
+  }
+  
+  .epochs-timeline {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-top: 0.5rem;
+  }
+  
+  .epochs-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 30px;
+    width: 2px;
+    background: linear-gradient(to bottom, #D4AF37, #EB5E28);
+    display: none; /* Nascondiamo temporaneamente in questa implementazione */
+  }
+  
+  .epoch-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #FFFCF2;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #E5E5E5;
+    position: relative;
+    flex: 1 1 calc(25% - 1.5rem);
+    min-width: 200px;
+  }
+  
+  .epoch-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: #D4AF37;
+    background-color: white;
+  }
+  
+  .epoch-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #D4AF37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .epoch-item:hover .epoch-icon {
+    transform: scale(1.1) rotate(10deg);
+  }
+  
+  .epoch-icon i {
+    font-size: 1.3rem;
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .epoch-item:hover .epoch-icon i {
+    transform: scale(1.2);
+  }
+  
+  .epoch-info {
+    flex: 1;
+  }
+  
+  .epoch-info h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #403D39;
+    margin-bottom: 0.3rem;
+    transition: all 0.3s ease;
+  }
+  
+  .epoch-info p {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin: 0;
+  }
+  
+  @media (max-width: 992px) {
+    .epoch-item {
+      flex: 1 1 calc(33.33% - 1.5rem);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .epoch-item {
+      flex: 1 1 calc(50% - 1.5rem);
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .epoch-item {
+      flex: 1 1 100%;
+    }
+  }

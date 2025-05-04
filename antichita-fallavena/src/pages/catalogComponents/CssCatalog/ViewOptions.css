@@ -1,0 +1,100 @@
+/* src/components/catalog/ViewOptions.css */
+.view-options {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+    background-color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #E5E5E5;
+  }
+  
+  .view-options::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, #D4AF37, #B8860B);
+  }
+  
+  .view-mode-switch, 
+  .card-size-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .card-size-switch {
+    border-left: 1px solid #E5E5E5;
+    padding-left: 1rem;
+    margin-left: 1rem;
+  }
+  
+  .size-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+  }
+  
+  .view-btn,
+  .size-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .view-btn:hover,
+  .size-btn:hover {
+    background-color: rgba(212, 175, 55, 0.1);
+    color: #D4AF37;
+  }
+  
+  .view-btn.active,
+  .size-btn.active {
+    background-color: #D4AF37;
+    color: white;
+  }
+  
+  .view-btn svg,
+  .view-btn i,
+  .size-btn i {
+    transition: all 0.3s ease;
+  }
+  
+  .view-btn:hover svg,
+  .view-btn:hover i,
+  .size-btn:hover i {
+    transform: scale(1.2);
+  }
+  
+  @media (max-width: 768px) {
+    .view-options {
+      justify-content: space-between;
+    }
+    
+    .card-size-switch {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .view-mode-switch .view-btn span {
+      display: none;
+    }
+    
+    .view-btn {
+      padding: 8px 12px;
+    }
+  }
