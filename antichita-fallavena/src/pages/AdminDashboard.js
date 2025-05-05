@@ -1,11 +1,74 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGoogleAuth } from '../contexts/GoogleAuthContext';
+import app from '../firebase-config';
+import { getDatabase, ref, get } from 'firebase/database';
 import './CSSpages/AdminEventi.css'; // Riutilizziamo gli stili esistenti
 
 const AdminDashboard = () => {
   const { logout } = useGoogleAuth();
   const navigate = useNavigate();
+  
+  // Stati per le statistiche
+  const [eventiCount, setEventiCount] = useState('-');
+  const [catalogoCount, setCatalogoCount] = useState('-');
+  const [bachecaCount, setBachecaCount] = useState('-');
+  const [loading, setLoading] = useState(true);
+
+  // Carica i dati all'avvio
+  useEffect(() => {
+    fetchStatistiche();
+  }, []);
+
+  const fetchStatistiche = async () => {
+    setLoading(true);
+    try {
+      const db = getDatabase(app);
+      
+      // Recupera i conteggi dalle diverse collezioni
+      const eventiRef = ref(db, 'Eventi');
+      const catalogoRef = ref(db, 'Catalogo');
+      const bachecaRef = ref(db, 'Bacheca');
+      
+      const [eventiSnapshot, catalogoSnapshot, bachecaSnapshot] = await Promise.all([
+        get(eventiRef),
+        get(catalogoRef),
+        get(bachecaRef)
+      ]);
+      
+      // Calcola i conteggi
+      let eventiNum = 0;
+      let catalogoNum = 0;
+      let bachecaNum = 0;
+      
+      if (eventiSnapshot.exists()) {
+        eventiSnapshot.forEach(() => {
+          eventiNum++;
+        });
+      }
+      
+      if (catalogoSnapshot.exists()) {
+        catalogoSnapshot.forEach(() => {
+          catalogoNum++;
+        });
+      }
+      
+      if (bachecaSnapshot.exists()) {
+        bachecaSnapshot.forEach(() => {
+          bachecaNum++;
+        });
+      }
+      
+      // Aggiorna gli stati
+      setEventiCount(eventiNum);
+      setCatalogoCount(catalogoNum);
+      setBachecaCount(bachecaNum);
+    } catch (error) {
+      console.error("Errore nel recupero delle statistiche:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -169,38 +232,98 @@ const AdminDashboard = () => {
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
       }}>
         <h3 style={{ color: '#403D39', marginBottom: '1.5rem' }}>Statistiche Rapide</h3>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '1.5rem'
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <div style={{ 
+              display: 'inline-block',
+              width: '40px',
+              height: '40px',
+              border: '4px solid rgba(235, 94, 40, 0.3)',
+              borderRadius: '50%',
+              borderTop: '4px solid #EB5E28',
+              animation: 'spin 1s linear infinite'
+            }}></div>
+            <style>
+              {`
+                @keyframes spin {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+                }
+              `}
+            </style>
+            <p style={{ marginTop: '1rem', color: '#6c757d' }}>Caricamento statistiche...</p>
+          </div>
+        ) : (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '1.5rem'
+          }}>
+            <div style={{
+              padding: '1rem',
+              backgroundColor: '#f8f9fa',
+              borderRadius: '8px',
+              textAlign: 'center'
+            }}>
+              <h4 style={{ color: '#6c757d', marginBottom: '0.5rem' }}>Eventi Attivi</h4>
+              <p style={{ fontSize: '2rem', color: '#EB5E28', margin: 0 }}>{eventiCount}</p>
+            </div>
+            <div style={{
+              padding: '1rem',
+              backgroundColor: '#f8f9fa',
+              borderRadius: '8px',
+              textAlign: 'center'
+            }}>
+              <h4 style={{ color: '#6c757d', marginBottom: '0.5rem' }}>Prodotti in Catalogo</h4>
+              <p style={{ fontSize: '2rem', color: '#EB5E28', margin: 0 }}>{catalogoCount}</p>
+            </div>
+            <div style={{
+              padding: '1rem',
+              backgroundColor: '#f8f9fa',
+              borderRadius: '8px',
+              textAlign: 'center'
+            }}>
+              <h4 style={{ color: '#6c757d', marginBottom: '0.5rem' }}>Prodotti in Bacheca</h4>
+              <p style={{ fontSize: '2rem', color: '#EB5E28', margin: 0 }}>{bachecaCount}</p>
+            </div>
+          </div>
+        )}
+        <div style={{ 
+          marginTop: '1.5rem', 
+          display: 'flex', 
+          justifyContent: 'center',
+          opacity: loading ? 0.5 : 1
         }}>
-          <div style={{
-            padding: '1rem',
-            backgroundColor: '#f8f9fa',
-            borderRadius: '8px',
-            textAlign: 'center'
-          }}>
-            <h4 style={{ color: '#6c757d', marginBottom: '0.5rem' }}>Eventi Attivi</h4>
-            <p style={{ fontSize: '2rem', color: '#EB5E28', margin: 0 }}>-</p>
-          </div>
-          <div style={{
-            padding: '1rem',
-            backgroundColor: '#f8f9fa',
-            borderRadius: '8px',
-            textAlign: 'center'
-          }}>
-            <h4 style={{ color: '#6c757d', marginBottom: '0.5rem' }}>Prodotti in Catalogo</h4>
-            <p style={{ fontSize: '2rem', color: '#EB5E28', margin: 0 }}>-</p>
-          </div>
-          <div style={{
-            padding: '1rem',
-            backgroundColor: '#f8f9fa',
-            borderRadius: '8px',
-            textAlign: 'center'
-          }}>
-            <h4 style={{ color: '#6c757d', marginBottom: '0.5rem' }}>Prodotti in Bacheca</h4>
-            <p style={{ fontSize: '2rem', color: '#EB5E28', margin: 0 }}>-</p>
-          </div>
+          <button 
+            onClick={fetchStatistiche}
+            disabled={loading}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              backgroundColor: 'transparent',
+              border: '1px solid #EB5E28',
+              color: '#EB5E28',
+              padding: '0.5rem 1rem',
+              borderRadius: '4px',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              transition: 'all 0.2s'
+            }}
+            onMouseEnter={(e) => {
+              if (!loading) {
+                e.currentTarget.style.backgroundColor = 'rgba(235, 94, 40, 0.1)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M23 4v6h-6"></path>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            Aggiorna statistiche
+          </button>
         </div>
       </div>
     </div>

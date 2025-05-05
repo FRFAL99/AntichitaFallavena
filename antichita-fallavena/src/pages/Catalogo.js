@@ -17,6 +17,7 @@ import LoadMoreButton from './catalogComponents/LoadMoreButton';
 import NoResults from './catalogComponents/NoResults';
 import BackToTopButton from './catalogComponents/BackToTopButton';
 import Loading from './catalogComponents/Loading';
+import LatestArrivals from './catalogComponents/LatestArrivals';
 
 const Catalogo = () => {
   const [arrayCatalogo, setCatalogoArray] = useState([]);
@@ -297,6 +298,11 @@ useEffect(() => {
         {/* Schermata iniziale: Visualizzazione categorie */}
         {!showFullCatalog && !isLoading && (
           <>
+            {/* Ultimi arrivi - Nuova sezione aggiunta in alto */}
+              <LatestArrivals 
+                items={arrayCatalogo} 
+              />
+
             {/* Categorie principali con immagini */}
             <FeaturedCategories 
               categories={categories} 

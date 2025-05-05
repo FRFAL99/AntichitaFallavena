@@ -20,11 +20,13 @@ const AdminBacheca = () => {
     dimensioni: '',
     disponibilita: 'disponibile',
     materiali: '',
-    peso: '',
+    // Rimosso il campo peso
     numeroPezzi: '',
     immagineUrl: '',
     immagini: []
   });
+  // Aggiunto stato per il toggle del prezzo non specificato
+  const [prezzoNonSpecificato, setPrezzoNonSpecificato] = useState(false);
   const [newImageUrl, setNewImageUrl] = useState('');
   const { logout } = useGoogleAuth();
   const navigate = useNavigate();
@@ -34,6 +36,15 @@ const AdminBacheca = () => {
   useEffect(() => {
     fetchProdotti();
   }, []);
+
+  // Imposta correttamente il prezzo non specificato quando si carica un prodotto esistente
+  useEffect(() => {
+    if (editingProduct && editingProduct.prezzoNonSpecificato) {
+      setPrezzoNonSpecificato(true);
+    } else {
+      setPrezzoNonSpecificato(false);
+    }
+  }, [editingProduct]);
 
   const handleLogout = async () => {
     try {
@@ -112,25 +123,45 @@ const AdminBacheca = () => {
     }));
   };
 
+  // Gestisce il toggle del prezzo non specificato
+  const handlePrezzoToggle = (e) => {
+    const checked = e.target.checked;
+    setPrezzoNonSpecificato(checked);
+    
+    // Se si attiva "prezzo non specificato", disabilita il campo prezzo
+    if (checked) {
+      setFormData(prev => ({
+        ...prev,
+        prezzo: '' // Svuota il campo prezzo
+      }));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
+      // Crea un timestamp ISO per la data di aggiunta (formato compatibile con ordinamento)
+      const dataAggiunta = new Date().toISOString();
+      
       const productData = {
         nome: formData.nome,
         descrizione: formData.descrizione,
-        prezzo: formData.prezzo,
+        prezzo: prezzoNonSpecificato ? '' : formData.prezzo, // Se prezzo non specificato, salva stringa vuota
+        prezzoNonSpecificato: prezzoNonSpecificato, // Salva lo stato del toggle
         Categoria: formData.Categoria,
         anno: formData.anno,
         dimensioni: formData.dimensioni,
         disponibilita: formData.disponibilita,
         materiali: formData.materiali,
-        peso: formData.peso,
+        // Rimosso il campo peso
         numeroPezzi: formData.numeroPezzi,
         immagineUrl: formData.immagineUrl,
         immagini: formData.immagini,
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
+        // Aggiungi il campo dataAggiunta per la visualizzazione degli ultimi arrivi
+        dataAggiunta: dataAggiunta
       };
 
       if (editingProduct) {
@@ -157,11 +188,12 @@ const AdminBacheca = () => {
         dimensioni: '',
         disponibilita: 'disponibile',
         materiali: '',
-        peso: '',
+        // Rimosso il campo peso
         numeroPezzi: '',
         immagineUrl: '',
         immagini: []
       });
+      setPrezzoNonSpecificato(false);
       setEditingProduct(null);
       
       await fetchProdotti();
@@ -184,11 +216,15 @@ const AdminBacheca = () => {
       dimensioni: prodotto.dimensioni || '',
       disponibilita: prodotto.disponibilita || 'disponibile',
       materiali: prodotto.materiali || '',
-      peso: prodotto.peso || '',
+      // Rimosso il campo peso
       numeroPezzi: prodotto.numeroPezzi || '',
       immagineUrl: prodotto.immagineUrl || '',
       immagini: prodotto.immagini || []
     });
+    
+    // Imposta lo stato del checkbox "Prezzo non specificato"
+    setPrezzoNonSpecificato(prodotto.prezzoNonSpecificato || false);
+    
     setActiveTab('add');
   };
 
@@ -240,6 +276,30 @@ const AdminBacheca = () => {
       } catch (error) {
         console.error("Errore nella rimozione dalla bacheca:", error);
       }
+    }
+  };
+
+  // Formatta la data in formato leggibile
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('it-IT', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  // Funzione per visualizzare il prezzo formattato o "Prezzo non specificato"
+  const displayPrice = (prodotto) => {
+    if (prodotto.prezzoNonSpecificato) {
+      return "Prezzo non specificato";
+    } else if (prodotto.prezzo) {
+      return `€ ${prodotto.prezzo}`;
+    } else {
+      return "N/A";
     }
   };
 
@@ -345,8 +405,8 @@ const AdminBacheca = () => {
           </div>
 
           <div className="form-row">
-            <div className="form-group">
-              <label>Prezzo (€) *</label>
+            <div className="form-group" style={{ position: 'relative' }}>
+              <label>Prezzo (€) {!prezzoNonSpecificato && '*'}</label>
               <input
                 type="number"
                 name="prezzo"
@@ -354,8 +414,35 @@ const AdminBacheca = () => {
                 onChange={handleInputChange}
                 step="0.01"
                 min="0"
-                required
+                required={!prezzoNonSpecificato}
+                disabled={prezzoNonSpecificato}
+                style={{ opacity: prezzoNonSpecificato ? 0.5 : 1 }}
               />
+              <div style={{ 
+                marginTop: '8px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '8px' 
+              }}>
+                <input
+                  type="checkbox"
+                  id="prezzo-non-specificato"
+                  checked={prezzoNonSpecificato}
+                  onChange={handlePrezzoToggle}
+                  style={{ marginRight: '5px' }}
+                />
+                <label 
+                  htmlFor="prezzo-non-specificato" 
+                  style={{ 
+                    fontSize: '0.9rem', 
+                    fontWeight: 'normal', 
+                    cursor: 'pointer',
+                    margin: 0
+                  }}
+                >
+                  Prezzo non specificato
+                </label>
+              </div>
             </div>
 
             <div className="form-group">
@@ -416,19 +503,6 @@ const AdminBacheca = () => {
             </div>
 
             <div className="form-group">
-              <label>Peso</label>
-              <input
-                type="text"
-                name="peso"
-                value={formData.peso}
-                onChange={handleInputChange}
-                placeholder="es. 10 kg"
-              />
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
               <label>Numero Pezzi</label>
               <input
                 type="number"
@@ -439,7 +513,9 @@ const AdminBacheca = () => {
                 placeholder="es. 1, 2, 3..."
               />
             </div>
+          </div>
 
+          <div className="form-row">
             <div className="form-group">
               <label>Disponibilità</label>
               <select
@@ -598,6 +674,7 @@ const AdminBacheca = () => {
             {editingProduct && (
               <button type="button" onClick={() => {
                 setEditingProduct(null);
+                setPrezzoNonSpecificato(false);
                 setFormData({
                   nome: '',
                   descrizione: '',
@@ -607,7 +684,7 @@ const AdminBacheca = () => {
                   dimensioni: '',
                   disponibilita: 'disponibile',
                   materiali: '',
-                  peso: '',
+                  // Rimosso il campo peso
                   numeroPezzi: '',
                   immagineUrl: '',
                   immagini: []
@@ -636,6 +713,7 @@ const AdminBacheca = () => {
                   <th>Categoria</th>
                   <th>Prezzo</th>
                   <th>Disponibilità</th>
+                  <th>Data Aggiunta</th>
                   <th>Azioni</th>
                 </tr>
               </thead>
@@ -653,8 +731,9 @@ const AdminBacheca = () => {
                     </td>
                     <td>{prodotto.nome}</td>
                     <td>{prodotto.Categoria}</td>
-                    <td>€ {prodotto.prezzo}</td>
+                    <td>{displayPrice(prodotto)}</td>
                     <td>{prodotto.disponibilita}</td>
+                    <td>{formatDate(prodotto.dataAggiunta)}</td>
                     <td>
                       <button onClick={() => handleEdit(prodotto)}>Modifica</button>
                       <button onClick={() => handleDelete(prodotto.id)}>Elimina</button>
@@ -687,6 +766,7 @@ const AdminBacheca = () => {
                   <th>Nome</th>
                   <th>Categoria</th>
                   <th>Prezzo</th>
+                  <th>Data Aggiunta</th>
                   <th>Azioni</th>
                 </tr>
               </thead>
@@ -704,7 +784,8 @@ const AdminBacheca = () => {
                     </td>
                     <td>{prodotto.nome}</td>
                     <td>{prodotto.Categoria}</td>
-                    <td>€ {prodotto.prezzo}</td>
+                    <td>{displayPrice(prodotto)}</td>
+                    <td>{formatDate(prodotto.dataAggiunta)}</td>
                     <td>
                       <button 
                         onClick={() => handleRemoveFromBacheca(prodotto.id)}
